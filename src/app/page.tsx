@@ -1,95 +1,83 @@
+import { Heading, Separator, Text } from "@radix-ui/themes";
 import Image from "next/image";
-import styles from "./page.module.css";
+import Header from "./ui-header/page";
+import {
+  CoreValues,
+  Heading as HeadingStyle,
+  HeroBanner,
+  HeroBannerText,
+  SeparatorRoot,
+  TextContainer,
+  TextContainerParent,
+} from "./styles.css";
+import { HobbyKnifeIcon } from "@radix-ui/react-icons";
+import Person from "./icons/Person";
 
-export default function Home() {
+// Metadata for the page coming from a CMS or static file
+export const metadata = {
+  title:
+    " Discover Culinary Excellence by Hiring talented home chefs by the hour",
+  coreValues: [
+    { title: "Excellence", description: "Unforgettable Culinary Experiences" },
+    { title: "Innovation", description: "Dynamic, Fresh, Exciting Flavors" },
+    { title: "Quality", description: "Source to Plate Culinary Delights" },
+    { title: "Sustainability", description: "Eco-friendly Dining Practices" },
+  ],
+  CoreValuesTitle: "OUR CORE VALUES",
+};
+
+export default function HomePage() {
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol>
-          <li>
-            Get started by editing <code>src/app/page.tsx</code>.
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.secondary}
-          >
-            Read our docs
-          </a>
+    <>
+      <Header isLoggedIn={false} />
+      <section className="grid gap-8 md:grid-cols-2 items-center">
+        <Heading size="7" className={HeadingStyle} align="center">
+          {metadata.title}
+        </Heading>
+        <div className={HeroBanner}>
+          <Image
+            src="/landingPage.webp"
+            alt="Landing page image"
+            width={600}
+            height={600}
+            priority
+          />{" "}
         </div>
-      </main>
-      <footer className={styles.footer}>
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+
+        <div className={HeroBannerText}>
+          <div style={{ marginBottom: 24 }}>
+            <Text size="7" className={TextContainer}>
+              {metadata.CoreValuesTitle}
+            </Text>
+          </div>
+          <div className={TextContainerParent}>
+            {metadata.coreValues.map((value, i) => (
+              <div key={value.title} className={CoreValues}>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    gap: 8,
+                    paddingRight: "12px",
+                  }}
+                >
+                  <Person />
+                  <Text size="4" className={TextContainer}>
+                    {value.title}
+                  </Text>
+                  <Text size="1" className={TextContainer}>
+                    {value.description}
+                  </Text>
+                </div>
+                {i < metadata.coreValues.length - 1 && (
+                  <Separator className={SeparatorRoot} orientation="vertical" />
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    </>
   );
 }
