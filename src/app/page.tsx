@@ -1,6 +1,6 @@
 import { Heading, Separator, Text } from "@radix-ui/themes";
 import Image from "next/image";
-import Header from "./ui-header/page";
+import Header from "./ui-header/Header";
 import {
   CoreValues,
   Heading as HeadingStyle,
@@ -10,7 +10,6 @@ import {
   TextContainer,
   TextContainerParent,
 } from "./styles.css";
-import { HobbyKnifeIcon } from "@radix-ui/react-icons";
 import Person from "./icons/Person";
 
 // Metadata for the page coming from a CMS or static file
