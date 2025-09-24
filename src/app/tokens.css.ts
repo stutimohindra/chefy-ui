@@ -9,17 +9,21 @@ import {
   redDark,
   greenDark,
   teal,
+  violet,
 } from "@radix-ui/colors";
 
 export const vars = createThemeContract({
   colors: {
     gray1: null,
     gray2: null,
+    gray7: null,
     gray12: null,
     blue9: null,
     red9: null,
     green9: null,
     teal11: null,
+    violet6: null,
+    violet12: null,
   },
   space: {
     "1": null,
@@ -51,10 +55,13 @@ export const lightTheme = createTheme(vars, {
     gray1: gray.gray1,
     gray2: gray.gray2,
     gray12: gray.gray12,
+    gray7: gray.gray7,
     blue9: blue.blue9,
     red9: red.red9,
     green9: green.green9,
     teal11: teal.teal11,
+    violet6: violet.violet6,
+    violet12: violet.violet12,
   },
   space: spaceValues,
 });
@@ -64,10 +71,13 @@ export const darkTheme = createTheme(vars, {
     gray1: grayDark.gray1,
     gray2: grayDark.gray2,
     gray12: grayDark.gray12,
+    gray7: gray.gray7,
     blue9: blueDark.blue9,
     red9: redDark.red9,
     green9: greenDark.green9,
     teal11: teal.teal11,
+    violet6: violet.violet6,
+    violet12: violet.violet12,
   },
   space: spaceValues,
 });

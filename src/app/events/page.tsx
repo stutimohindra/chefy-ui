@@ -122,7 +122,7 @@ export default function BerlinRadiusMarkers() {
 
   return (
     <>
-      <Header isLoggedIn={false} />
+      <Header isLoggedIn={false} isChefbooked={false} />
       <>
         <div
           style={{

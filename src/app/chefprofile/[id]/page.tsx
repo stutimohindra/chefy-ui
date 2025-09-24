@@ -1,10 +1,11 @@
-import React from "react";
-import { Avatar, Flex, Separator, Text } from "@radix-ui/themes";
+"use client";
+import React, { use, useState } from "react";
+import { AlertDialog, Avatar, Flex, Text } from "@radix-ui/themes";
 import Header from "@/app/ui-header/Header";
 import Gallery from "./Gallery";
 import ChefInfoCapsule from "./ChefInfoCapsule";
 import ChefReview from "./ChefReview";
-import type { ChefProfileProps } from "./types";
+import { BookingStatus, ChefProfileProps } from "./types";
 import { galleryWrap } from "./styles.css";
 import DatePicker from "./Calender";
 
@@ -35,6 +36,7 @@ export const sampleChefs: ChefProfileProps[] = [
       "https://images.unsplash.com/photo-1589308078055-98b85a1c7dcd",
     ],
     gender: "",
+    availability: [],
   },
   {
     id: "chef_002",
@@ -62,6 +64,7 @@ export const sampleChefs: ChefProfileProps[] = [
       "https://images.unsplash.com/photo-1589308078055-98b85a1c7dcd",
     ],
     gender: "",
+    availability: [],
   },
   {
     id: "chef_003",
@@ -89,6 +92,7 @@ export const sampleChefs: ChefProfileProps[] = [
       "https://images.unsplash.com/photo-1589308078055-98b85a1c7dcd",
     ],
     gender: "",
+    availability: [],
   },
   {
     id: "chef_004",
@@ -116,6 +120,7 @@ export const sampleChefs: ChefProfileProps[] = [
       "https://images.unsplash.com/photo-1589308078055-98b85a1c7dcd",
     ],
     gender: "",
+    availability: [],
   },
   {
     id: "chef_005",
@@ -131,57 +136,57 @@ export const sampleChefs: ChefProfileProps[] = [
         rating: 5,
       },
       {
-        customerName: "Charlotte M.",
-        comment: "The crème brûlée was a masterpiece.",
-        customerPhotoUrl: "https://randomuser.me/api/portraits/women/90.jpg",
+        customerName: "Liam P.",
+        comment: "The pasta was cooked to perfection, reminded me of Rome.",
+        customerPhotoUrl: "https://randomuser.me/api/portraits/men/32.jpg",
+        rating: 4,
+      },
+      {
+        customerName: "Sophia K.",
+        comment: "Loved the spices in the curry, authentic and flavorful.",
+        customerPhotoUrl: "https://randomuser.me/api/portraits/women/12.jpg",
         rating: 5,
       },
       {
-        customerName: "Charlotte M.",
-        comment: "The crème brûlée was a masterpiece.",
-        customerPhotoUrl: "https://randomuser.me/api/portraits/women/90.jpg",
+        customerName: "Ethan J.",
+        comment: "Great presentation, though the steak could have been hotter.",
+        customerPhotoUrl: "https://randomuser.me/api/portraits/men/85.jpg",
+        rating: 3,
+      },
+      {
+        customerName: "Amelia R.",
+        comment: "The sushi rolls were fresh and beautifully plated.",
+        customerPhotoUrl: "https://randomuser.me/api/portraits/women/45.jpg",
         rating: 5,
       },
       {
-        customerName: "Charlotte M.",
-        comment: "The crème brûlée was a masterpiece.",
-        customerPhotoUrl: "https://randomuser.me/api/portraits/women/90.jpg",
+        customerName: "Noah D.",
+        comment: "Desserts were divine, but portion sizes a bit small.",
+        customerPhotoUrl: "https://randomuser.me/api/portraits/men/28.jpg",
+        rating: 4,
+      },
+      {
+        customerName: "Isabella W.",
+        comment: "Our chef was so friendly and explained each dish.",
+        customerPhotoUrl: "https://randomuser.me/api/portraits/women/62.jpg",
         rating: 5,
       },
       {
-        customerName: "Charlotte M.",
-        comment: "The crème brûlée was a masterpiece.",
-        customerPhotoUrl: "https://randomuser.me/api/portraits/women/90.jpg",
+        customerName: "James L.",
+        comment: "The paella was excellent, just like in Valencia.",
+        customerPhotoUrl: "https://randomuser.me/api/portraits/men/41.jpg",
         rating: 5,
       },
       {
-        customerName: "Charlotte M.",
-        comment: "The crème brûlée was a masterpiece.",
-        customerPhotoUrl: "https://randomuser.me/api/portraits/women/90.jpg",
-        rating: 5,
+        customerName: "Mia T.",
+        comment: "Lovely vegetarian options, creative and tasty.",
+        customerPhotoUrl: "https://randomuser.me/api/portraits/women/77.jpg",
+        rating: 4,
       },
       {
-        customerName: "Charlotte M.",
-        comment: "The crème brûlée was a masterpiece.",
-        customerPhotoUrl: "https://randomuser.me/api/portraits/women/90.jpg",
-        rating: 5,
-      },
-      {
-        customerName: "Charlotte M.",
-        comment: "The crème brûlée was a masterpiece.",
-        customerPhotoUrl: "https://randomuser.me/api/portraits/women/90.jpg",
-        rating: 5,
-      },
-      {
-        customerName: "Charlotte M.",
-        comment: "The crème brûlée was a masterpiece.",
-        customerPhotoUrl: "https://randomuser.me/api/portraits/women/90.jpg",
-        rating: 5,
-      },
-      {
-        customerName: "Charlotte M.",
-        comment: "The crème brûlée was a masterpiece.",
-        customerPhotoUrl: "https://randomuser.me/api/portraits/women/90.jpg",
+        customerName: "Oliver C.",
+        comment: "Best experience we’ve had at home dining, highly recommend!",
+        customerPhotoUrl: "https://randomuser.me/api/portraits/men/53.jpg",
         rating: 5,
       },
     ],
@@ -201,14 +206,32 @@ export const sampleChefs: ChefProfileProps[] = [
       "https://pub-c6c8a449d9614c1cab47358267aa7cf0.r2.dev/toast.avif",
     ],
     gender: "Female",
+    availability: [
+      "08:00",
+      "10:00",
+      "12:00",
+      "14:00",
+      "16:00",
+      "18:00",
+      "20:00",
+    ],
   },
 ];
 
 const ChefProfile = ({ id = "chef_005" }: { id: string }) => {
   const chef = sampleChefs.find((chef) => chef.id === id);
+  const [chefBookingStatus, setChefBookingStatus] = useState<BookingStatus>();
+  const [onTimerComplete, setOnTimerComplete] = useState(false);
+
   return (
     <>
-      <Header isLoggedIn={true} />
+      <Header
+        isLoggedIn={true}
+        isChefbooked={chefBookingStatus === BookingStatus.RESERVED}
+        isTimerComplete={(val) => {
+          setOnTimerComplete(val);
+        }}
+      />
       <div className={galleryWrap}>
         <Text
           as="div"
@@ -245,7 +268,13 @@ const ChefProfile = ({ id = "chef_005" }: { id: string }) => {
               </Flex>
             </Flex>
           </>
-          <DatePicker />
+          <DatePicker
+            availability={chef?.availability!}
+            onChefBooked={(status: BookingStatus): void => {
+              setChefBookingStatus(status);
+              document.cookie = "ch_isChefBooked=true; max-age=600";
+            }}
+          />
         </Flex>
         <ChefReview
           name={chef?.name!}
@@ -254,6 +283,33 @@ const ChefProfile = ({ id = "chef_005" }: { id: string }) => {
           gender={chef?.gender!}
           experience={chef?.experience!}
         />
+        <>
+          <AlertDialog.Root open={onTimerComplete}>
+            <AlertDialog.Content className="AlertDialogContent">
+              <AlertDialog.Title className="AlertDialogTitle">
+                Are you absolutely sure?
+              </AlertDialog.Title>
+              <AlertDialog.Description className="AlertDialogDescription">
+                This action cannot be undone. This will permanently delete your
+                account and remove your data from our servers.
+              </AlertDialog.Description>
+              <div
+                style={{
+                  display: "flex",
+                  gap: 25,
+                  justifyContent: "flex-end",
+                }}
+              >
+                <AlertDialog.Cancel>
+                  <button className="Button mauve">Cancel</button>
+                </AlertDialog.Cancel>
+                <AlertDialog.Action>
+                  <button className="Button red">Yes, delete account</button>
+                </AlertDialog.Action>
+              </div>
+            </AlertDialog.Content>
+          </AlertDialog.Root>
+        </>
       </div>
     </>
   );

@@ -58,3 +58,33 @@ export const capsuleSeparator = style({
   color: vars.colors.gray12,
   height: vars.space[8],
 });
+
+export const toggleStyles = style({
+  all: "unset",
+  backgroundColor: "white",
+  color: "black",
+  height: "35px",
+  width: "70px",
+  display: "flex",
+  fontSize: vars.space[5],
+  alignItems: "center",
+  justifyContent: "center",
+  boxShadow: "0 2px 10px black",
+  userSelect: "none",
+  selectors: {
+    "&:hover": {
+      backgroundColor: vars.colors.gray7,
+    },
+    "&:focus": {
+      boxShadow: "white",
+    },
+    '&[data-state="on"]': {
+      backgroundColor: vars.colors.violet12,
+      color: vars.colors.violet6,
+    },
+    '&[data-state="off"]': {
+      backgroundColor: "white",
+      color: "black",
+    },
+  },
+});

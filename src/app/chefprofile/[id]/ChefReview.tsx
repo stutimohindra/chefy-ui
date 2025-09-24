@@ -30,7 +30,7 @@ const ChefReview = ({
                 variant="soft"
                 src={review.customerPhotoUrl}
                 fallback={review.customerName.charAt(0)}
-                radius="small"
+                radius="full"
                 highContrast
               />
               <Flex direction={"column"} gap="2">

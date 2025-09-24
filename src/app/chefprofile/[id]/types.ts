@@ -18,6 +18,7 @@ export interface ChefProfileProps {
   photoUrl: string;
   foodphotoUrl: string[];
   gender: string;
+  availability: string[];
 }
 
 export type ChefInfoCapsuleProps = Pick<ChefProfileProps, "rating" | "reviews">;
@@ -28,3 +29,9 @@ export type ChefReviewProps = Pick<
   ChefProfileProps,
   "name" | "photoUrl" | "reviews" | "gender" | "experience"
 >;
+
+export enum BookingStatus {
+  RESERVED = "reserved",
+  SUCCESS = "success",
+  FAILED = "failed",
+}

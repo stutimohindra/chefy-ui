@@ -1,4 +1,4 @@
-import { Heading, Separator, Text } from "@radix-ui/themes";
+import { Flex, Heading, Separator, Text } from "@radix-ui/themes";
 import Image from "next/image";
 import Header from "./ui-header/Header";
 import {
@@ -11,6 +11,7 @@ import {
   TextContainerParent,
 } from "./styles.css";
 import Person from "./icons/Person";
+import Link from "next/link";
 
 // Metadata for the page coming from a CMS or static file
 export const metadata = {
@@ -28,7 +29,7 @@ export const metadata = {
 export default function HomePage() {
   return (
     <>
-      <Header isLoggedIn={false} />
+      <Header isLoggedIn={false} isChefbooked={false} />
       <section className="grid gap-8 md:grid-cols-2 items-center">
         <Heading size="7" className={HeadingStyle} align="center">
           {metadata.title}
@@ -42,7 +43,11 @@ export default function HomePage() {
             priority
           />{" "}
         </div>
-
+        <Flex justify={"center"}>
+          <Link href="/events">
+            <Text size="4">Find a Chef</Text>
+          </Link>
+        </Flex>
         <div className={HeroBannerText}>
           <div style={{ marginBottom: 24 }}>
             <Text size="7" className={TextContainer}>
