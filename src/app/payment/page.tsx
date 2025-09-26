@@ -22,8 +22,7 @@ const Checkout = (props: Props) => {
     })();
   }, []);
 
-  const stripePromise = loadStripe(
-  );
+  const stripePromise = loadStripe(process.env.LOAD_STRIPE);
 
   return (
     <div className="flex container mt-8">
