@@ -11,9 +11,7 @@ import {
   AddressElement,
 } from "@stripe/react-stripe-js";
 
-const stripePromise = loadStripe(
-  "pk_test_51S8VSCGwoiBL77Ulp7nqdQhbxS8h3sFTcYYbuPYoI4PSp7huNPHyPvJHUanOymPqmWanygQA1afviU0lPLBGqhbJ00tQMCVgIE"
-  // process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
+const stripePromise = loadStripe( process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
 );
 
 function CheckoutForm({ clientSecret }: { clientSecret: string }) {
